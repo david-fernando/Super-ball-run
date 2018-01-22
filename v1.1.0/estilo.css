@@ -1,0 +1,35 @@
+		body{
+			height: 100%;
+			width: 100%;
+			background-image: url("imagens/buttons-12.fw.png");
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: 100%;
+			background-attachment: fixed;
+			background-clip: border-box;
+			overflow-x: hidden;
+		}
+		#aviso{
+			width: 0px auto;
+			margin-left: 30%;
+			margin-right: 24%;
+			margin-top: 5%;
+			position: fixed;
+		}
+		.atencao{
+			text-align: center;
+			font-family: "Bodoni Bd BT";
+			font-size: 42px;
+		}
+		.texto_de_aviso{
+			text-align: justify;
+			font-family: Arial;
+			font-size: 42px;
+		}
+		.placa_de_atencao{
+			height: 25%;
+			width: 25%;
+			margin-left: 37%;
+			margin-right: 34.5%;
+			margin-bottom: -20pt;
+		}

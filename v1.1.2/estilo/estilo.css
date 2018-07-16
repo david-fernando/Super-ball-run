@@ -1,0 +1,10 @@
+		body{
+			height: 100%;
+			width: 100%;
+			background-image: url("imagens/buttons-12.fw.png");
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: 100%;
+			background-attachment: fixed;
+			background-clip: border-box;
+		}

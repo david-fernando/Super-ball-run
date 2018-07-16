@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+<head>
+	<title>Super ball run</title>
+	<meta charset="utf-8">
+	<script src="device.js"></script>
+	<script type="text/javascript">
+		let dispositivo_mobile = device.mobile();
+		let android_phone = device.androidPhone();
+		if(dispositivo_mobile == true && android_phone == true){
+			window.location.assign("mobile-game/index.html");
+		}
+	</script>
+	<link rel="stylesheet" type="text/css" href="estilo.css">
+</head>
+<body>
+	<div id="aviso">
+		<img src="imagens/industrial-safety-1492046_640.png" class="placa_de_atencao">
+		<h3 class="atencao">Atenção!</h3>
+		<p class="texto_de_aviso">O Jogo não é compatível com este dispositivo.<br>Para brincar com Super Ball run acesse novamente este site de um celular com android.</p>
+	</div>
+
+</body>
+</html>

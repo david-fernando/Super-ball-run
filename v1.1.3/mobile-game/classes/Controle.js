@@ -2,13 +2,22 @@ function Controle(){
 	this.x = windowWidth;
 	this.y = windowHeight;
 	this.controlador = loadImage("imagens/controle.png");
-	this.direcional__superior_do_controlador_presssionado = loadImage("imagens/direcional_superior_pressionado.png")
+	this.direcional__superior_do_controlador_presssionado = loadImage("imagens/direcional_superior_pressionado.png");
+	this.direcional__inferior_do_controlador_presssionado = loadImage("imagens/direcional_inferior_pressionado.png");
+	this.direcional__direito_do_controlador_presssionado = loadImage("imagens/direcional_direito_pressionado.png");
 	this.controle = function(){
 		image(this.controlador, 0, this.y/ 2, this.x, this.y / 2 );
 	}
 	this.direcional_superior_pressionado = function(){
 		image(this.direcional__superior_do_controlador_presssionado, 0, this.y/ 2, this.x, this.y / 2 );
 	}
+	this.direcional_inferior_pressionado = function(){
+		image(this.direcional__inferior_do_controlador_presssionado, 0, this.y/ 2, this.x, this.y / 2 );
+	}
+	this.direcional_direito_pressionado = function(){
+		image(this.direcional__direito_do_controlador_presssionado, 0, this.y/ 2, this.x, this.y / 2 );
+	}
+	/*
 	this.painel = function(){
 		 fill(255);
 		 rect(0, this.y/ 2, this.x, this.y / 2 );
@@ -109,4 +118,5 @@ function Controle(){
 	    this.posicao_y_do_botao_pause = (window.innerHeight / 2) + (window.innerHeight / 16) + (window.innerHeight / 10.5) + (window.innerHeight / 21.5);
 	    rect(this.posicao_x_do_botao_pause, this.posicao_y_do_botao_pause, this.tamanho_x_do_botao_pause, this.tamanho_y_do_botao_pause, 20);
 	};
+	*/
 };

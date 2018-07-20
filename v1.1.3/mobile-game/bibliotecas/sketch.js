@@ -20,6 +20,8 @@ var mostrar_tela_de_sobre = false;
 var mostrar_tela_inicial = true;
 var apertou_botao_start = false;
 var direcional_superior = false;
+var direcional_inferior = false;
+var direcional_direito = false;
 function setup() {
 	createCanvas(window.innerWidth - 10, window.innerHeight - 4);
 	aviso = new Aviso();
@@ -46,6 +48,16 @@ function draw() {
 	    	}else{
 	    	controle.controle();
 	    }
+	    if(direcional_inferior == true && mouseIsPressed){
+	    	    controle.direcional_inferior_pressionado();
+	        }else{
+	    	controle.controle();
+	    }
+	    if(direcional_direito == true && mouseIsPressed){
+	    	    controle.direcional_direito_pressionado();
+	        }else{
+	    	controle.controle();
+	    }
 		personagem.personagem();
 		if(mostrar_tela_de_sobre == false || mostrar_tela_inicial == true){
 			tela_inicial.tela_inicial();
@@ -66,18 +78,17 @@ function draw() {
 		}
 		for(var i = 0; i < obstaculos.length; i++){
 			obstaculos[i].cano();
-	        obstaculos[i].entrada_do_cano();
 	        obstaculos[i].movimento_do_cano();
 	        if(obstaculos[i].impacto_com_o_cano(personagem.pos_x, personagem.pos_y)){
 	        	fim_de_jogo = true;
 	        }
 	        if(fim_de_jogo == false){
-	        	obstaculos[i].x = obstaculos[i].x;
+	        	obstaculos[i].posicao_x_do_cano = obstaculos[i].posicao_x_do_cano;
 	        }
-	        /*if(fim_de_jogo == true){
+	        if(fim_de_jogo == true){
 	        	obstaculos[i].resetar_posicao_do_cano();
-	        }*/
-	        if(obstaculos[i].posicao_x_da_entrada < personagem.pos_x - 60 && fim_de_jogo == false){
+	        }
+	        if(obstaculos[i].posicao_x_do_cano < personagem.pos_x - 60 && fim_de_jogo == false){
 	        	pontos.pontuacao();
 	        }
 	    }
@@ -86,6 +97,16 @@ function draw() {
 	    if(direcional_superior == true && mouseIsPressed){
 	    		controle.direcional_superior_pressionado();
 	    	}else{
+	    	controle.controle();
+	    }
+	    if(direcional_inferior == true && mouseIsPressed){
+	    	controle.direcional_inferior_pressionado();
+	    }else{
+	    	controle.controle();
+	    }
+	    if(direcional_direito == true && mouseIsPressed){
+	    	    controle.direcional_direito_pressionado();
+	        }else{
 	    	controle.controle();
 	    }
 	}
@@ -126,13 +147,13 @@ function touchStarted(){
 	var localizar_botao_pause = dist(mouseX, mouseY,(window.innerWidth / 2) + (window.innerWidth / 2.4), (window.innerHeight / 2) + (window.innerHeight / 4));
 	var localizar_direcional_superior = dist(mouseX, mouseY,window.innerWidth / 3.20, window.innerHeight / 1.48);
 	var localizar_direcional_inferior = dist(mouseX, mouseY,window.innerWidth / 3.20, window.innerHeight / 1.20);
-	if(mouseIsPressed){
+	/*if(mouseIsPressed){
 		if(localizar_direcional_superior < 140){
 			direcional_superior = true;
 		}else{
 			direcional_superior = false;
 		}
-	}
+	}*/
 	if(localizar_botao_start < 95){
 		//console.log(localizar_botao_start);
 		//console.log("mouseX: "+ mouseX + "\nmouseY: " + mouseY + "\nAltura: "+ altura + "\nLagura: " + lagura);
@@ -177,8 +198,15 @@ function touchStarted(){
 	}else{
 	  if(localizar_direcional_inferior < 140){
 			seleção = "sobre";
+			direcional_inferior = true;
+		}else{
+			direcional_inferior = false;
 		}
 		if(localizar_direcional_superior < 140){
-			seleção = "jogar";		}
+			seleção = "jogar";
+			direcional_superior = true;		
+		}else{
+			direcional_superior = false;
+		}
 	}
 }

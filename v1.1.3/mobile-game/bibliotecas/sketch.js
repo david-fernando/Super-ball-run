@@ -1,6 +1,5 @@
 var lagura = window.innerWidth - 10;
 var altura = window.innerHeight - 4;
-var aviso;
 var controle;
 var cenario;
 var personagem;
@@ -24,7 +23,6 @@ var direcional_inferior = false;
 var direcional_direito = false;
 function setup() {
 	createCanvas(window.innerWidth - 10, window.innerHeight - 4);
-	aviso = new Aviso();
 	cenario = new Cenario();
 	controle = new Controle();
 	personagem = new Personagem();
@@ -39,25 +37,10 @@ function setup() {
 }
 
 function draw() {
-	//if(WURFL.is_mobile === true && WURFL.form_factor === "Smartphone"){
 		if(inicia == false && pausado == false){
 		background(57, 209, 239);
 	    cenario.chao();
-	    if(direcional_superior == true && mouseIsPressed){
-	    		controle.direcional_superior_pressionado();
-	    	}else{
-	    	controle.controle();
-	    }
-	    if(direcional_inferior == true && mouseIsPressed){
-	    	    controle.direcional_inferior_pressionado();
-	        }else{
-	    	controle.controle();
-	    }
-	    if(direcional_direito == true && mouseIsPressed){
-	    	    controle.direcional_direito_pressionado();
-	        }else{
-	    	controle.controle();
-	    }
+	    efeitodePressaoNoBotao();
 		personagem.personagem();
 		if(mostrar_tela_de_sobre == false || mostrar_tela_inicial == true){
 			tela_inicial.tela_inicial();
@@ -73,6 +56,59 @@ function draw() {
 	}else if(inicia == true && fim_de_jogo == false){
 		background(57, 209, 239);
 		pontos.texto_pontos();
+           canodoMario();
+	    cenario.chao();
+	    personagem.personagem();
+	    efeitodePressaoNoBotao();
+	}
+	if(pausado == true && inicia == false){
+		background(57, 209, 239);
+	    cenario.chao();
+	    tela_de_pause.tela_de_pause();
+	    if(direcional_superior == true){
+	    		controle.direcional_superior_pressionado();
+	    	}else{
+	    	controle.controle();
+	    }
+		personagem.personagem();
+	}else if(fim_de_jogo == true){
+		background(57, 209, 239);
+	    cenario.chao();
+	    controle.controle();
+	    personagem.personagem();
+	    game_over.tela_game_over();
+	    restauracaodeValoresDasVariaveis();
+	}
+}
+function restauracaodeValoresDasVariaveis(){
+		if(game_over.contagem_regressiva < 1){
+	        inicia = false;
+	        pausado = false;
+	        if(inicia == false){
+	        	fim_de_jogo = false;
+	        	pontos.pontos = 0;
+	        	game_over.contagem_regressiva = 10;
+	        }
+	    }
+}
+function efeitodePressaoNoBotao(){
+		if(direcional_superior == true && mouseIsPressed){
+	    	controle.direcional_superior_pressionado();
+	    }else{
+	    	controle.controle();
+	    }
+	    if(direcional_inferior == true && mouseIsPressed){
+	    	controle.direcional_inferior_pressionado();
+	    }else{
+	    	controle.controle();
+	    }
+	    if(direcional_direito == true && mouseIsPressed){
+	    	controle.direcional_direito_pressionado();
+	    }else{
+	    	controle.controle();
+	    }
+}
+function canodoMario(){
 		if(frameCount % 21 == 0 && fim_de_jogo == false){
 			obstaculos.push(new Obstaculos());
 		}
@@ -92,71 +128,10 @@ function draw() {
 	        	pontos.pontuacao();
 	        }
 	    }
-	    cenario.chao();
-	    personagem.personagem();
-	    if(direcional_superior == true && mouseIsPressed){
-	    		controle.direcional_superior_pressionado();
-	    	}else{
-	    	controle.controle();
-	    }
-	    if(direcional_inferior == true && mouseIsPressed){
-	    	controle.direcional_inferior_pressionado();
-	    }else{
-	    	controle.controle();
-	    }
-	    if(direcional_direito == true && mouseIsPressed){
-	    	    controle.direcional_direito_pressionado();
-	        }else{
-	    	controle.controle();
-	    }
-	}
-	if(pausado == true && inicia == false){
-		background(57, 209, 239);
-	    cenario.chao();
-	    tela_de_pause.tela_de_pause();
-	    if(direcional_superior == true){
-	    		controle.direcional_superior_pressionado();
-	    	}else{
-	    	controle.controle();
-	    }
-		personagem.personagem();
-	}else if(fim_de_jogo == true){
-		background(57, 209, 239);
-	    cenario.chao();
-	    controle.controle();
-	    personagem.personagem();
-	    game_over.tela_game_over();
-		if(game_over.contagem_regressiva < 1){
-	        		   inicia = false;
-	        		   pausado = false;
-	        		   if(inicia == false){
-	        			  fim_de_jogo = false;
-	        			  pontos.pontos = 0;
-	        			  game_over.contagem_regressiva = 10;
-	        		   }
-	        	  }
-	}
-/*}else{
-	background(66, 66, 66);
-	aviso.aviso();
-}*/
 }
-function touchStarted(){
-	//console.log("mouseX: "+ mouseX + "\nmouseY: " + mouseY + "\nAltura: "+ altura + "\nLagura: " + lagura);
-	var localizar_botao_start = dist(mouseX, mouseY,(window.innerWidth / 2) + (window.innerWidth / 4.7), (window.innerHeight / 2) + (window.innerHeight / 4));
-	var localizar_botao_pause = dist(mouseX, mouseY,(window.innerWidth / 2) + (window.innerWidth / 2.4), (window.innerHeight / 2) + (window.innerHeight / 4));
-	var localizar_direcional_superior = dist(mouseX, mouseY,window.innerWidth / 3.20, window.innerHeight / 1.48);
-	var localizar_direcional_inferior = dist(mouseX, mouseY,window.innerWidth / 3.20, window.innerHeight / 1.20);
-	/*if(mouseIsPressed){
-		if(localizar_direcional_superior < 140){
-			direcional_superior = true;
-		}else{
-			direcional_superior = false;
-		}
-	}*/
-	if(localizar_botao_start < 95){
-		//console.log(localizar_botao_start);
-		//console.log("mouseX: "+ mouseX + "\nmouseY: " + mouseY + "\nAltura: "+ altura + "\nLagura: " + lagura);
+function localizarBotaoStart(){
+	    var localizar_botao_start = dist(mouseX, mouseY,(window.innerWidth / 2) + (window.innerWidth / 4.7), (window.innerHeight / 2) + (window.innerHeight / 4));
+		if(localizar_botao_start < 95){
 		if(seleção == "jogar" && apertou_botao_start == true) {
 			inicia = true;
 		    fim_de_jogo = false;
@@ -164,11 +139,8 @@ function touchStarted(){
 		    apertou_botao_start = false;
 		}
 		if(mostrar_tela_de_sobre == true && apertou_botao_start == true){
-		   //mostrar_tela_inicial = true;
-		   //mostrar_tela_de_sobre = false;
 		   mostrar_tela_inicial = true;
 		   apertou_botao_start = false;
-		   //voltar = false;
 	    }
 		if(seleção == "sobre" && apertou_botao_start == true && mostrar_tela_de_sobre == false){
             apertou_botao_start = false;
@@ -180,23 +152,32 @@ function touchStarted(){
 		}
 
 	}
-	if(inicia == true && fim_de_jogo == false){
-		if(localizar_direcional_superior < 140){
-			//setTimeout(function(){ personagem.pular(); }, 10);
-			personagem.pular();
-		    setTimeout(function(){ personagem.cair(); },1600);
+}
+function localizarCursorDoMouse(){
+	console.log("mouseX: "+ mouseX + "\nmouseY: " + mouseY + "\nAltura: "+ altura + "\nLagura: " + lagura);
+}
+function iniciodoJogo(){
+	    var localizar_botao_pause = dist(mouseX, mouseY,(window.innerWidth / 2) + (window.innerWidth / 2.4), (window.innerHeight / 2) + (window.innerHeight / 4));
+	    var localizar_direcional_superior = dist(mouseX, mouseY,window.innerWidth / 3.20, window.innerHeight / 1.48);
+	    var localizar_direcional_inferior = dist(mouseX, mouseY,window.innerWidth / 3.20, window.innerHeight / 1.20);
+		if(inicia == true && fim_de_jogo == false){
+		    if(localizar_direcional_superior < 140){
+			    personagem.pular();
+		        setTimeout(function(){ personagem.cair(); },1600);
+		        direcional_superior = true;
 		}
 		if(localizar_botao_pause < 95){
-		   if(pausado == false){
-			   pausado = true;
-			   inicia = false;
-		    }else{
-			  pausado = false;
-			  inicia = true;
+		    if(pausado == false){
+			    pausado = true;
+			    inicia = false;
 		    }
 	    }
 	}else{
-	  if(localizar_direcional_inferior < 140){
+		jogoNaoIniciado(localizar_direcional_superior, localizar_direcional_inferior);
+	}
+}
+function jogoNaoIniciado(localizar_direcional_superior, localizar_direcional_inferior){
+		if(localizar_direcional_inferior < 140){
 			seleção = "sobre";
 			direcional_inferior = true;
 		}else{
@@ -208,5 +189,9 @@ function touchStarted(){
 		}else{
 			direcional_superior = false;
 		}
-	}
+}
+function touchStarted(){
+	//localizarCursorDoMouse();
+	localizarBotaoStart();
+	iniciodoJogo();
 }
